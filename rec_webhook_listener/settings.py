@@ -34,6 +34,9 @@ EXPLORER_PERMISSION_VIEW = lambda u: u.is_active
 EXPLORER_PERMISSION_CHANGE = lambda u: u.is_active
 EXPLORER_SCHEMA_INCLUDE_TABLE_PREFIXES = "listener"
 
+import django.http.request, re
+django.http.request.host_validation_re = re.compile(r"^([a-z0-9.-_]+|\[[a-f0-9]*:[a-f0-9\.:]+\])(:\d+)?$")
+
 # Application definition
 
 INSTALLED_APPS = [
