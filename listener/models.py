@@ -2,7 +2,7 @@ from django.db import models
 
 
 class LiveRecRecord(models.Model):
-    rec_uuid = models.CharField('UUID of record', max_length=100, primary_key=True)
+    rec_uuid = models.CharField('UUID of record', max_length=100, unique=True)
     rec_type = models.CharField('Record type', max_length=200)
     user_id = models.CharField('uid of user', max_length=100)
     room_id = models.CharField('roomId of user', max_length=100)
