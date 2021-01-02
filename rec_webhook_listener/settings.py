@@ -25,7 +25,7 @@ SECRET_KEY = 'apwpu1c3rpl9whftfe9o_ufh&-3%3(oe9a1#$r#olnoags444)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["vtbrec_webhook.misty.moe"]
 
 
 # Application definition
