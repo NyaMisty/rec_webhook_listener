@@ -5,6 +5,8 @@ import dateutil.parser
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from .models import *
 
 def index(request):
@@ -12,6 +14,7 @@ def index(request):
 
 
 # {"EventRandomId":"6b99e438-d9a6-42ef-9cc1-cbc2fc9bae24","RoomId":23058,"Name":"3号直播间","Title":"哔哩哔哩音悦台","RelativePath":"23058-3号直播间/录制-23058-20201220-205436-哔哩哔哩音悦台.flv","FileSize":296522,"StartRecordTime":"2020-12-20T20:54:36.9523326+08:00","EndRecordTime":"2020-12-20T20:54:37.4386879+08:00"}
+@method_decorator(csrf_exempt, name='dispatch')
 class BilirecHookView(View):
     def post(self, request):
         contributor = request.GET.get('i', None)
@@ -47,7 +50,7 @@ class BilirecHookView(View):
         rec.save()
         return HttpResponse('Successfully received & saved record!')
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class VtbrecHookView(View):
     def post(self, request):
         contributor = request.GET.get('i', None)

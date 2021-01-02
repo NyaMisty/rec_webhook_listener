@@ -25,12 +25,18 @@ SECRET_KEY = 'apwpu1c3rpl9whftfe9o_ufh&-3%3(oe9a1#$r#olnoags444)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["vtbrec_webhook.misty.moe"]
+ALLOWED_HOSTS = ["*"]
 
+EXPLORER_CONNECTIONS = { 'Default': 'default' }
+EXPLORER_DEFAULT_CONNECTION = 'default'
+EXPLORER_PERMISSION_VIEW = lambda u: u.is_active
+EXPLORER_PERMISSION_CHANGE = lambda u: u.is_active
+EXPLORER_SCHEMA_INCLUDE_TABLE_PREFIXES = "listener"
 
 # Application definition
 
 INSTALLED_APPS = [
+    'explorer',
     'listener.apps.ListenerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,12 +46,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+import django.contrib.admin.checks
+def stub(*args, **kwargs):
+   return []
+django.contrib.admin.checks.check_dependencies = stub
+#django.contrib.admin.checks.check_dependencies = stub
+
+#AUTH_USER_MODEL = "auto_auth.User"
+
 MIDDLEWARE = [
     #'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'auto_auth.Middleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
